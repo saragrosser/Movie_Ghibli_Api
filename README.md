@@ -1,0 +1,1 @@
+This is a simple web server built with Node.js, it allows users to retrieve information about Studio Ghibli movies, including titles, descriptions, release dates, and ratings. Users will be able to sign up, update their personal information, and create a list of their favourite movies.
