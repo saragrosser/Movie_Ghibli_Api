@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Studio Ghibli Movie API Documentation</title>
+  </head>
+  <body>
+    <h1>Studio Ghibli Movie API Documentation</h1>
+    <p>
+      This API allows users to retrieve information about Studio Ghibli movies,
+      including titles, descriptions, release dates, and ratings. It's designed
+      for developers looking to integrate movie data into their applications.
+    </p>
+    <table>
+      <tr>
+        <th>Request</th>
+        <th>URL</th>
+        <th>Full endpoint</th>
+        <th>HTTP Method</th>
+        <th>Response</th>
+      </tr>
+      <tr>
+        <td>Get a list of movies</td>
+        <td>/movies</td>
+        <td>http://localhost:8080/movies</td>
+        <td>GET</td>
+        <td>JSON list of movies</td>
+      </tr>
+      <tr>
+        <td>Get data about a single movie by ID</td>
+        <td>/movies/{ID}</td>
+        <td>http://localhost:8080/movies/2</td>
+        <td>GET</td>
+        <td>JSON data of a movie</td>
+      </tr>
+      <tr>
+        <td>Add a movie</td>
+        <td>/movies</td>
+        <td>http://localhost:8080/movies</td>
+        <td>POST</td>
+        <td>Confirmation of movie addition</td>
+      </tr>
+      <tr>
+        <td>Remove a movie by ID</td>
+        <td>/movies/{ID}</td>
+        <td>http://localhost:8080/movies/1</td>
+        <td>DELETE</td>
+        <td>Confirmation of movie deletion</td>
+      </tr>
+      <tr>
+        <td>Update a movie's information by ID</td>
+        <td>/movies/{ID}</td>
+        <td>http://localhost:8080/movies/1</td>
+        <td>PUT</td>
+        <td>Confirmation of movie update</td>
+      </tr>
+    </table>
+    <section>
+      <h2>Get a List of Movies</h2>
+      <p>Returns an array of movies, each with an ID, title, and year.</p>
+      <p><strong>Endpoint:</strong> /movies</p>
+      <p><strong>Method:</strong> GET</p>
+      <p><strong>Response Format:</strong> JSON array of movies</p>
+      <pre>
+          [
+              {
+                  "id": 1,
+                  "title": "My Neighbor Totoro",
+                  "year": 1988
+              },
+              // More movies...
+          ]
+      </pre>
+    </section>
+    <section>
+      <h2>Add a Movie</h2>
+      <p>Adds a new movie to the collection.</p>
+      <p><strong>Endpoint:</strong> /movies</p>
+      <p><strong>Method:</strong> POST</p>
+      <p>
+        <strong>Request Body Format:</strong> JSON object containing movie
+        details
+      </p>
+      <pre>
+          {
+              "title": "Castle in the Sky",
+              "year": 1986
+          }
+      </pre>
+      <p><strong>Response Format:</strong> JSON object of the added movie</p>
+      <pre>
+          {
+              "id": 11,
+              "title": "Castle in the Sky",
+              "year": 1986
+          }
+      </pre>
+    </section>
+  </body>
+</html>
