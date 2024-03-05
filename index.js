@@ -103,6 +103,17 @@ app.put("/movies/:id", (req, res) => {
       res.status(500).send("Error: " + error);
     });
 });
+// List of users
+app.get("/users", (req, res) => {
+  Users.find()
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
+});
 
 // Register a new user
 app.post("/users", (req, res) => {
