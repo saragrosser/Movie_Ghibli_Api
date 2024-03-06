@@ -13,6 +13,10 @@ const app = express();
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
 
+let auth = require("./auth")(app); // Import auth.js and pass the Express app for configuration
+const passport = require("passport");
+require("./passport"); // Import your Passport configuration
+
 // Logging midleware
 app.use(morgan("common"));
 
@@ -33,16 +37,20 @@ app.use((req, res, next) => {
 app.use(express.static("public"));
 
 // GET route for "/movies" that returns a list of movies
-app.get("/movies", (req, res) => {
-  Movies.find()
-    .then((movies) => {
-      res.status(200).json(movies);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send("Error: " + error);
-    });
-});
+app.get(
+  "/movies",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    await Movies.find()
+      .then((movies) => {
+        res.status(201).json(movies);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  }
+);
 
 // Route to get data about a single movie by ID
 app.get("/movies/:id", (req, res) => {
@@ -132,24 +140,36 @@ app.post("/users", (req, res) => {
 });
 
 // Update user info by username
-app.put("/users/:username", (req, res) => {
-  const updatedUser = req.body;
-  Users.findOneAndUpdate(
-    { Username: req.params.username },
-    { $set: updatedUser },
-    { new: true }
-  )
-    .then((updatedUser) => {
-      if (!updatedUser) {
-        return res
-          .status(400)
-          .send(`User ${req.params.username} was not found`);
-      } else {
+app.put(
+  "/users/:Username",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    // CONDITION TO CHECK ADDED HERE
+    if (req.user.Username !== req.params.Username) {
+      return res.status(400).send("Permission denied");
+    }
+    // CONDITION ENDS
+    await Users.findOneAndUpdate(
+      { Username: req.params.Username },
+      {
+        $set: {
+          Username: req.body.Username,
+          Password: req.body.Password,
+          Email: req.body.Email,
+          Birthday: req.body.Birthday,
+        },
+      },
+      { new: true }
+    ) // This line makes sure that the updated document is returned
+      .then((updatedUser) => {
         res.json(updatedUser);
-      }
-    })
-    .catch((error) => res.status(500).send("Error: " + error));
-});
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
 
 // Add a movie to user's list of favorites
 app.post("/users/:username/movies/:movieId", (req, res) => {
