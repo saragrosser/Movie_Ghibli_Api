@@ -6,7 +6,9 @@ const Movies = Models.Movie;
 const Users = Models.User;
 
 // Updated connection setup without the deprecated options
-mongoose.connect("mongodb://localhost:27017/movie-api-database");
+mongoose.connect(
+  "mongodb+srv://sgrosser00:Inzlba2hIK8skkOD@studio-ghibli-api.obfaka4.mongodb.net/?retryWrites=true&w=majority&appName=Studio-Ghibli-API"
+);
 
 const express = require("express");
 const morgan = require("morgan");
