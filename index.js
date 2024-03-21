@@ -5,6 +5,7 @@ const { check, validationResult } = require("express-validator");
 const Movies = Models.Movie;
 const Users = Models.User;
 
+//mongoose.connect('mongodb://localhost:27017/dbname', { useNewUrlParser: true, useUnifiedTopology: true });
 // Updated connection setup without the deprecated options
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
