@@ -64,17 +64,21 @@ app.use((req, res, next) => {
 // Serve static files from 'public' directory
 app.use(express.static("public"));
 
-// GET route for "/movies" that returns a list of movies
-app.get("/movies", async (req, res) => {
-  await Movies.find()
-    .then((movies) => {
-      res.status(201).json(movies);
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send("Error: " + error);
-    });
-});
+// GET route for "/movies" that returns a list of movies with JWT authentication
+app.get(
+  "/movies",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    await Movies.find()
+      .then((movies) => {
+        res.status(201).json(movies);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  }
+);
 
 // Route to get data about a single movie by ID
 app.get("/movies/:id", (req, res) => {
