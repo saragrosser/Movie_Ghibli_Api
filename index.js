@@ -150,6 +150,24 @@ app.get("/users", (req, res) => {
       res.status(500).send("Error: " + error);
     });
 });
+//Fetch user details by username
+app.get(
+  "/users/:username",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Users.findOne({ Username: req.params.username })
+      .then((user) => {
+        if (!user) {
+          return res.status(404).send("User not found.");
+        }
+        res.json(user);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  }
+);
 
 // Register new user with hashed password
 app.post(
