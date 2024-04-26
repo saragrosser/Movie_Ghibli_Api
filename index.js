@@ -24,6 +24,7 @@ let allowedOrigins = [
   "http://testsite.com",
   "http://localhost:1234",
   "http://localhost:3000",
+  "https://movie-ghibli-api-60afc8eabe21.herokuapp.com",
 ];
 
 app.use(
