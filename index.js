@@ -25,7 +25,6 @@ let allowedOrigins = [
   "http://localhost:1234",
   "http://localhost:3000",
   "https://movie-ghibli-api-60afc8eabe21.herokuapp.com",
-  "https://studio-ghibli-client.netlify.app/",
 ];
 
 app.use(
