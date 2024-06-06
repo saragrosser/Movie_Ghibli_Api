@@ -47,7 +47,7 @@ let auth = require("./auth")(app); // Import auth.js and pass the Express app fo
 const passport = require("passport");
 require("./passport"); // Import your Passport configuration
 
-// Logging midleware
+// Logging middleware
 app.use(morgan("common"));
 
 let myLogger = (req, res, next) => {
@@ -66,7 +66,13 @@ app.use((req, res, next) => {
 // Serve static files from 'public' directory
 app.use(express.static("public"));
 
-// GET route for "/movies" that returns a list of movies with JWT authentication
+/**
+ * Gets a list of movies
+ * @async
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ * @returns {Promise<Array>} A promise that resolves to an array of movies
+ */
 app.get(
   "/movies",
   passport.authenticate("jwt", { session: false }),
@@ -82,7 +88,11 @@ app.get(
   }
 );
 
-// Route to get data about a single movie by ID
+/**
+ * Gets data about a single movie by ID
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ */
 app.get("/movies/:id", (req, res) => {
   Movies.findById(req.params.id)
     .then((movie) => {
@@ -98,7 +108,11 @@ app.get("/movies/:id", (req, res) => {
     });
 });
 
-// Route for adding a movie
+/**
+ * Adds a new movie to the database
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ */
 app.post("/movies", (req, res) => {
   Movies.create(req.body)
     .then((newMovie) => {
@@ -110,7 +124,11 @@ app.post("/movies", (req, res) => {
     });
 });
 
-// Route to remove a movie by ID
+/**
+ * Deletes a movie by ID
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ */
 app.delete("/movies/:id", (req, res) => {
   Movies.findByIdAndRemove(req.params.id)
     .then((movie) => {
@@ -126,7 +144,11 @@ app.delete("/movies/:id", (req, res) => {
     });
 });
 
-// Route to update a movie's information by ID
+/**
+ * Updates a movie's information by ID
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ */
 app.put("/movies/:id", (req, res) => {
   Movies.findByIdAndUpdate(req.params.id, req.body, { new: true })
     .then((updatedMovie) => {
@@ -141,7 +163,14 @@ app.put("/movies/:id", (req, res) => {
       res.status(500).send("Error: " + error);
     });
 });
-// List of users
+
+/**
+ * Gets a list of users
+ * @async
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ * @returns {Promise<Array>} A promise that resolves to an array of users
+ */
 app.get(
   "/users",
   passport.authenticate("jwt", { session: false }),
@@ -156,7 +185,12 @@ app.get(
       });
   }
 );
-//Fetch user details by username
+
+/**
+ * Fetches user details by username
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ */
 app.get(
   "/users/:username",
   passport.authenticate("jwt", { session: false }),
@@ -175,7 +209,11 @@ app.get(
   }
 );
 
-// Register new user with hashed password
+/**
+ * Registers a new user with hashed password
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ */
 app.post(
   "/users",
   [
@@ -224,7 +262,11 @@ app.post(
   }
 );
 
-// Update user info by username
+/**
+ * Updates user info by username
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ */
 app.put(
   "/users/:Username",
   [
@@ -271,7 +313,11 @@ app.put(
   }
 );
 
-// Add a movie to user's list of favorites
+/**
+ * Adds a movie to user's list of favorites
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ */
 app.post("/users/:username/movies/:movieId", (req, res) => {
   Users.findOneAndUpdate(
     { Username: req.params.username },
@@ -292,7 +338,11 @@ app.post("/users/:username/movies/:movieId", (req, res) => {
     .catch((error) => res.status(500).send("Error: " + error));
 });
 
-// Remove a movie from user's list of favorites
+/**
+ * Removes a movie from user's list of favorites
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ */
 app.delete("/users/:username/movies/:movieId", (req, res) => {
   Users.findOneAndUpdate(
     { Username: req.params.username },
@@ -315,7 +365,11 @@ app.delete("/users/:username/movies/:movieId", (req, res) => {
     .catch((error) => res.status(500).send("Error: " + error));
 });
 
-// Deregister a user by username
+/**
+ * Deregisters a user by username
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ */
 app.delete("/users/:username", (req, res) => {
   Users.findOneAndRemove({ Username: req.params.username })
     .then((user) => {
@@ -328,13 +382,23 @@ app.delete("/users/:username", (req, res) => {
     .catch((error) => res.status(500).send("Error: " + error));
 });
 
-// Error handling middleware
+/**
+ * Error handling middleware
+ * @param {Object} err - The error object
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ * @param {Function} next - The next middleware function
+ */
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something went wrong!");
 });
 
-// GET route for the root that returns a default textual response.
+/**
+ * GET route for the root that returns a default textual response.
+ * @param {Object} req - The request object
+ * @param {Object} res - The response object
+ */
 app.get("/", (req, res) => {
   res.send("Welcome to My Studio Ghibli Movie API!");
 });
