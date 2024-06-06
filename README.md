@@ -1,12 +1,12 @@
-Project Overview:
+#Project Overview:
 The web application will provide users with access to information about Studio-Ghibli
 movies, directors, and genres. Users will be able to sign up, update their
 personal information, and create a list of their favorite movies.
 
-Getting Started
+#Getting Started
 To run this API locally, you'll need to follow these steps:
 
-Prerequisites
+#Prerequisites
 Before you begin, make sure you have the following installed on your local machine:
 
 Node.js: Download and install Node.js
@@ -35,7 +35,7 @@ Add the following Express.js environment variables to the .env file:
 
 PORT=8080
 
-Production
+#Production
 
 Add the following MongoDB environment variables to the connection settings of your cloud application.
 
