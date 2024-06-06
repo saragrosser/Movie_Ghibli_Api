@@ -52,9 +52,6 @@ Start the server:
 npm start or node index.js
 The API will be running locally at http://localhost:8080.
 
-Endpoints Documentation
-All available endpoints along with their descriptions can be viewed https://cine-verse-b8832aa84c3e.herokuapp.com//api/v1/documentation.
-
 Authentication
 All endpoints are protected except for /. To access them, users must first create an account.
 
