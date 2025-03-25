@@ -1,71 +1,73 @@
-#Project Overview:
-The web application will provide users with access to information about Studio-Ghibli
-movies, directors, and genres. Users will be able to sign up, update their
-personal information, and create a list of their favorite movies.
+# Studio Ghibli Web Application - API Guide
 
-#Getting Started
-To run this API locally, you'll need to follow these steps:
+## Project Overview
 
-#Prerequisites
-Before you begin, make sure you have the following installed on your local machine:
+The web application provides users with access to information about Studio Ghibli movies, directors, and genres. Users can sign up, update personal information, and create a list of their favorite movies.
 
-Node.js: Download and install Node.js
-MongoDB: Install MongoDB
-Installation
-Clone the repository to your local machine 
+---
 
-Navigate to the project directory:
+## Getting Started
 
-cd
+To run this API locally, follow the steps below.
 
-Install dependencies using npm. For the list of dependencies, refer to the package.json file.
+---
 
-npm install
+## Prerequisites
 
-Configuration
-Development
+Make sure the following are installed on your local machine:
 
-Create a .env file in the root directory of the project.
+- [Node.js](https://nodejs.org)
+- [MongoDB](https://www.mongodb.com/try/download/community)
 
-Add the following MongoDB environment variables to the .env file:
+---
 
-CONNECTION_URI=""
+## Installation
 
-Add the following Express.js environment variables to the .env file:
+1. **Clone the repository** to your local machine:
 
-PORT=8080
+    ```bash
+    git clone <repository-url>
+    ```
 
-#Production
+2. **Navigate to the project directory:**
 
-Add the following MongoDB environment variables to the connection settings of your cloud application.
+    ```bash
+    cd <project-directory>
+    ```
 
-Replace <your-mongodb-uri> with your actual MongoDB URI provided by MongoDB Atlas or any other MongoDB hosting service you are using.
+3. **Install dependencies:**
 
-Use process.env.CONNECTION_URI in your code to access the MongoDB URI. Here's an example of how you can connect to MongoDB using Mongoose:
+    ```bash
+    npm install
+    ```
 
-const mongoose = require('mongoose'); mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+    _Refer to the `package.json` file for a full list of dependencies._
 
-Note: By following these steps, you can set up your own MongoDB connection securely without exposing sensitive information in the codebase.
-Running the API
-Start the server:
+---
 
-npm start or node index.js
-The API will be running locally at http://localhost:8080.
+## Configuration
 
-Authentication
-All endpoints are protected except for /. To access them, users must first create an account.
+### Development
 
-Testing
-You can test the API endpoints using tools like for example Postman.
+1. **Create a `.env` file** in the root directory.
 
-In Postman, call the endpoint by replacing http://localhost:8080/ with your local port number.
+2. **Add MongoDB environment variable**:
 
+    ```env
+    CONNECTION_URI=""
+    ```
 
+3. **Add Express.js environment variable**:
 
+    ```env
+    PORT=8080
+    ```
 
+---
 
+### Production
 
+Add your actual MongoDB URI to your cloud application's connection settings and use it in your `.env` file:
 
-
-
-
+```env
+CONNECTION_URI="your-production-uri"
